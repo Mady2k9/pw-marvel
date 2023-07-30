@@ -10,6 +10,7 @@ import { Layout } from './Layout'
 import { LogoMarvels } from '@components/assets/icons/LogoMarvels'
 import Link from 'next/link'
 import React from 'react'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const Login = ({ onOTPGet }: { onOTPGet: any }) => {
   // Form State
@@ -40,6 +41,8 @@ const Login = ({ onOTPGet }: { onOTPGet: any }) => {
         setShouldRegister(true)
         localStorage.setItem('shouldRegister', 'true')
       }
+
+      triggerTrackEvent.marvelLoginNumber(username)
     }
   }
 
@@ -58,6 +61,17 @@ const Login = ({ onOTPGet }: { onOTPGet: any }) => {
   const [countryNumber, setCountryNumber] = useState(false)
   const showCountryNumber = () => {
     setCountryNumber(true)
+  }
+
+  const handleEventRegister = () => {
+    //window.open('register', '_self')
+    console.log('Event trigger::')
+    const registerNowData = {
+      source: 'login_page',
+      campaign: '',
+      coming_from: 'login_page',
+    }
+    triggerTrackEvent.marvelRegisterNow(registerNowData)
   }
 
   return (
@@ -135,7 +149,11 @@ const Login = ({ onOTPGet }: { onOTPGet: any }) => {
               <div className="flex mx-auto pt-[25px] gap-8">
                 <div className={s.have_acount}>Don’t have an account?</div>
 
-                <a href="/register" className={s.register_now}>
+                <a
+                  href="/register"
+                  className={s.register_now}
+                  onClick={handleEventRegister}
+                >
                   Register Now
                 </a>
               </div>

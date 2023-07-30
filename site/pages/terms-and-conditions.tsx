@@ -2,10 +2,16 @@ import Footer from '@modules/SiteFooter'
 import Header from '@components/common/Header/Header'
 import Breadcrumb from '@modules/Breadcrumb/breadcrumb'
 import Container from '@components/ui/Container/Container'
+import { useEffect } from 'react'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const items = [{ name: 'Terms & Conditions', url: '/' }]
 
 const termsCon = () => {
+  useEffect(() => {
+    triggerTrackEvent.marvelNavbarNavigation('terms_and_conditions_pw_marvels')
+    //console.log('Event triggered: ')
+  }, [])
   return (
     <>
       <Header variant="MARVELSHeader" />

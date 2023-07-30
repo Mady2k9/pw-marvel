@@ -6,6 +6,7 @@ import { Button, Typography } from '@components/ui'
 import Container from '@components/ui/Container/Container'
 import { useRouter } from 'next/router'
 import { registrationClose } from '@config/types/registrationDate'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 export interface BannerProps {
   data: any
 }
@@ -14,7 +15,14 @@ const Banner: React.FC<BannerProps> = (props) => {
   const router = useRouter()
 
   const handleRegister = () => {
-    window.open('register', '_self')
+    //window.open('register', '_self')
+    const registerNowData = {
+      source: 'hero_section',
+      //reg_form_link: `${process.env.NEXT_PUBLIC_SAT_REGISTER_NOW_URL}`,
+      campaign: '',
+      coming_from: 'hero_section',
+    }
+    triggerTrackEvent.marvelRegisterNow(registerNowData)
   }
 
   return (
@@ -48,7 +56,11 @@ const Banner: React.FC<BannerProps> = (props) => {
                 achievements and be a proud PW Marvel
               </div>
               {registrationClose && (
-                <a href={'/register'} className={s.color_btn}>
+                <a
+                  href={'/register'}
+                  className={s.color_btn}
+                  onClick={handleRegister}
+                >
                   <span className="inline-flex text-white">
                     Register Now
                     <img
