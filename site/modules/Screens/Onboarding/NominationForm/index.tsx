@@ -11,6 +11,8 @@ import { useGetDraftData } from '@lib/hooks/marvel/useGetDraftData'
 import { useMarvelContext } from '@modules/MarvelContext'
 import useNotify, { NotificationEnums } from '@lib/useNotify'
 import { ActionModal } from '@components/ui/Modal'
+import { localStorageHelper } from '@utils/helps'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 export type AchievementFEType = {
   examGroup: string
@@ -117,6 +119,9 @@ const NominationFormScreen = () => {
     postMarvelDataAsDraft(dataToSend, randomId)
       .then((res: any) => {
         if (res) {
+          const studentData = localStorageHelper.getItem('user')
+          const className = studentData?.profileId?.class
+          triggerTrackEvent.marvelNominationSubmit(className)
           push('/upload-document')
         }
       })
@@ -134,6 +139,9 @@ const NominationFormScreen = () => {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
+    const studentData = localStorageHelper.getItem('user')
+    const className = studentData?.profileId?.class
+    triggerTrackEvent.marvelNominationTncAction(className)
   }
 
   const shouldSubmitDisable = () => {
@@ -147,6 +155,14 @@ const NominationFormScreen = () => {
       setNavBarText('Edit')
     }
   }
+
+  useEffect(() => {
+    if (isModalOpen) {
+      const studentData = localStorageHelper.getItem('user')
+      const className = studentData?.profileId?.class
+      triggerTrackEvent.marvelNominationTncPopup(className)
+    }
+  }, [isModalOpen])
 
   return (
     <Layout

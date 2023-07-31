@@ -1,0 +1,16 @@
+export enum EventType {
+  'MARVEL_LANDING_PAGE' = 'marvels_landing_page_visit',
+  'MARVEL_REGISTER_NOW' = 'marvels_register_form_visit',
+  'MARVEL_MOBILE_NUMBER' = 'marvels_mobile_number_submit',
+  'MARVEL_REGISTER_SUCCESS' = 'marvel_registration_success',
+  'MARVEL_NAVBAR_NAVIGATION' = 'marvels_navbar_navigation',
+  'MARVEL_LOGIN_PAGE' = 'marvels_login_page_visit',
+  'MARVEL_MOBILE_NUMBER_CLICK' = 'marvels_mobile_number_click',
+  'MARVEL_LOGIN_SUCCESS' = 'marvels_login_success',
+  'MARVEL_FORM_VISIT' = 'marvels_form_visit',
+  'MARVEL_SUBMIT_PROFILE' = 'marvels_submit_profile',
+  'MARVEL_NOMINATION_TNC_POPUP' = 'marvels_nomination_tnc_popup',
+  'MARVEL_NOMINATION_TNC_ACTION' = 'marvels_nomination_tnc_action',
+  'MARVEL_NOMINATION_SUBMIT' = 'marvels_nomination_submit',
+  'MARVEL_DOCUMENT_SUBMIT' = 'marvels_document_submit',
+}

@@ -7,6 +7,7 @@ import { Layout } from './Layout'
 import OtpInput from 'react-otp-input'
 import s from '@styles/auth/auth.module.css'
 import { useRouter } from 'next/router'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const ResendOTP = ({ canResend, setCanResend, resendOTP }: any) => {
   const [counter, setCounter] = useState(30)
@@ -71,6 +72,8 @@ const RegOtpView = ({ onReset }: { onReset: any }) => {
     //setNavigating(false)
     const success = await handleLogin(otp, mobile)
     if (success) {
+      triggerTrackEvent.marvelRegisterSuccess(mobile)
+
       router.push('profile-details')
     }
   }

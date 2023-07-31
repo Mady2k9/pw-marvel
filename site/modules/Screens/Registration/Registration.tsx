@@ -5,6 +5,7 @@ import { isPhoneValid, isNameValid } from '@lib/validations'
 import { Layout } from './Layout'
 import { TextInput } from '@components/ui/Input'
 import { useRouter } from 'next/router'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 type RegisterViewProps = {
   onOTPGet: (fullName: string, mobile: string) => void
@@ -32,6 +33,7 @@ const Register = ({ onOTPGet, name, phone }: RegisterViewProps) => {
     localStorage.setItem('username', mobile)
     e.preventDefault()
     await handleRegister(mobile, firstName)
+    triggerTrackEvent.marvelRegisterNumber(mobile)
   }
   const [countryNumber, setCountryNumber] = useState(false)
   const showCountryNumber = () => {

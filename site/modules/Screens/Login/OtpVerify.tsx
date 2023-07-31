@@ -10,6 +10,7 @@ import p from '@modules/Screens/components.module.css' // TODO - Changes module 
 import { Layout } from '@modules/Screens/Login/Layout'
 import { LogoMarvels } from '@components/assets/icons/LogoMarvels'
 import Link from 'next/link'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const ResendOTP = ({ canResend, setCanResend, resendOTP }: any) => {
   const [counter, setCounter] = useState(30)
@@ -78,6 +79,9 @@ const OTPView = ({ onReset }: { onReset: any }) => {
   useEffect(() => {
     if (user) {
       setNavigating(true)
+
+      triggerTrackEvent.marvelLoginSuccess(username)
+
       router.replace('/profile-details')
     }
   }, [user])
