@@ -3,6 +3,7 @@ import cn from 'clsx'
 import s from './nomination-steps.module.css'
 import Container from '@components/ui/Container/Container'
 import { registrationClose } from '@config/types/registrationDate'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 export interface NominationStepsProps {
   data: any
@@ -10,6 +11,17 @@ export interface NominationStepsProps {
 
 const NominationSteps: React.FC<NominationStepsProps> = (props) => {
   const rootClassName = cn(s.root, {})
+
+  const handleRegister = () => {
+    //window.open('register', '_self')
+    const registerNowData = {
+      source: 'middle_section',
+      //reg_form_link: `${process.env.NEXT_PUBLIC_SAT_REGISTER_NOW_URL}`,
+      campaign: '',
+      coming_from: 'middle_section',
+    }
+    triggerTrackEvent.marvelRegisterNow(registerNowData)
+  }
 
   return (
     <section id="how-to-apply">
@@ -90,7 +102,11 @@ const NominationSteps: React.FC<NominationStepsProps> = (props) => {
         </div>
         {registrationClose && (
           <div className="mt-6 mb-10">
-            <a href="/register" className={s.color_btn}>
+            <a
+              href="/register"
+              className={s.color_btn}
+              onClick={handleRegister}
+            >
               <span className="inline-flex text-white">
                 Register Now
                 <img

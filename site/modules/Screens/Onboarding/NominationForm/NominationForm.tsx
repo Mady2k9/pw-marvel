@@ -5,6 +5,7 @@ import { AchievementFEType } from '.'
 import { CheckMarkIcon } from '@assets/images/marvel/checkMark'
 import { Button, useUI } from '@components/ui'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const REGSISTARTION_FORM_INSTRUCTION = [
   'To nominate yourself, please select an exam with mentioned criteria.',
@@ -118,6 +119,18 @@ function NominationForm({
       )
     })
   }
+
+  useEffect(() => {
+    // console.log('button name', navBarText)
+    const formVisitData = {
+      source: '',
+      campaign: '',
+      medium: '',
+      profile_details: { isEditEnabled } ? 'submitted' : 'not_submitted',
+      form_name: 'nomination',
+    }
+    triggerTrackEvent.marvelFormVisit(formVisitData)
+  }, [])
 
   //console.log('activeExamCategory', activeExamCategory)
 
