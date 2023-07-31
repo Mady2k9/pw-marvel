@@ -7,11 +7,11 @@ import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const items = [{ name: 'Terms & Conditions', url: '/' }]
 
-const termsCon = () => {
-  useEffect(() => {
+const TermsCon = () => {
+  /*   useEffect(() => {
     triggerTrackEvent.marvelNavbarNavigation('terms_and_conditions_pw_marvels')
-    //console.log('Event triggered: ')
-  }, [])
+   
+  }, []) */
   return (
     <>
       <Header variant="MARVELSHeader" />
@@ -82,4 +82,4 @@ const termsCon = () => {
   )
 }
 
-export default termsCon
+export default TermsCon
