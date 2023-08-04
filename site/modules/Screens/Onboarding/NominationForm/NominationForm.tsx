@@ -8,7 +8,7 @@ import { PencilSquareIcon } from '@heroicons/react/24/solid'
 
 const REGSISTARTION_FORM_INSTRUCTION = [
   'To nominate yourself, please select an exam with mentioned criteria.',
-  'Weightage of the title is decreasing from group wise i.e. From Group A to Group C',
+  'In a particular group, you should only select one title where you have the highest level achievement.',
   'You can fill multiple awards that will be counted separately. Exact details mentioned in each category.',
   'After selecting the title of your choice, please click on submit button and your form will be saved.',
 ]

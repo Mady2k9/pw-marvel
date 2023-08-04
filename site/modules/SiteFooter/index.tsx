@@ -144,7 +144,7 @@ const Footer = () => {
                 <span className=" text-[#B5BBC5] flex flex-inline gap-2 items-center">
                   <PhoneIcon className="w-4 h-4" />
                   <Typography weight={600} variant="small">
-                    0000000000
+                    08069453538
                   </Typography>
                 </span>
                 <span className=" text-[#B5BBC5] flex flex-inline gap-2 items-center">
@@ -201,7 +201,7 @@ const Footer = () => {
                 <span className=" text-[#B5BBC5] flex flex-inline gap-2 items-center">
                   <PhoneIcon className="w-4 h-4" />
                   <Typography weight={600} variant="small">
-                    0000000000
+                    08069453538
                   </Typography>
                 </span>
                 <span className=" text-[#B5BBC5] flex flex-inline gap-2 items-center">
