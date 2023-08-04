@@ -19,6 +19,9 @@ const Home = () => {
 
   useEffect(() => {
     triggerTrackEvent.marvelLandingPage('others')
+  }, [])
+
+  useEffect(() => {
     if (user) {
       router.replace('/profile-details')
     }
