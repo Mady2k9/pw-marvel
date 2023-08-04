@@ -29,7 +29,7 @@ const TERMS_AND_CONDITIONS = [
   'To nominate yourself for PW Marvels, the student must have won at least one award in the listed academic years.',
   'Examination of the same category will be clubbed together and you should fill best among them.',
   'You can fill multiple awards that will be counted separately. Exact details mentioned in each category.',
-  'The weightage of the exam is decreasing Group wise i.e. Group A & Group B',
+  'In a particular group, you should only select one title where you have the highest level achievement.',
   'You can fill only one exam for your nomination and marking scheme is almost same for all same-category exams, but there may be a minor variation depending on the exam-conducting body, number of students participating & rank achieved.',
   'You can only fill those forms whose Valid Certificates are available with you. No internet copy will be entertained.',
 ]
