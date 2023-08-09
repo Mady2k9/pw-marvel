@@ -18,7 +18,7 @@ const Home = () => {
   const router = useRouter()
 
   useEffect(() => {
-    triggerTrackEvent.marvelLandingPage('others')
+    triggerTrackEvent.marvelLandingPage()
   }, [])
 
   useEffect(() => {

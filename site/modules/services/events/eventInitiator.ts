@@ -1,60 +1,59 @@
 import helper from '@lib/eventTracker/helper'
-//import { logEvent } from '@lib/events'
-//import gtag from 'ga-gtag'
+import globalProps from './globalProps'
+import { localStorageHelper } from '@utils/localStorage'
 
 import {
-  registrationConfirmationProps,
-  //satBannerClickProps,
   marvelRegisterNowProps,
   marvelLoginNowProps,
   marvelFormVisitProps,
-  marvelNominationTncPopupProps,
-  marvelRegisterSuccessProps,
-  marvelRegisterNumberProps,
+  marvelSubmitProfileProps,
 } from './eventInitiatorModel'
 import { EventType } from '@lib/events/events'
-//import { trackMoengageEvent } from './helper'
+import { useEffect } from 'react'
 
-let userId: string | null, userName: string | null, deviceId: string | null
+let userId: any,
+  //userName: any,
+  deviceId: any,
+  source: any,
+  medium: any,
+  campaign: any
 
 if (typeof window !== 'undefined') {
-  userId = JSON.parse(localStorage?.getItem('user') || '{}').id
-  userName = localStorage?.getItem('username')
+  //userId = JSON.parse(localStorage?.getItem('user') || '{}').id
   deviceId = localStorage?.getItem('randomId')
 }
+userId = helper.isUserloggedIn()
+  ? JSON.parse(localStorage?.getItem('user') || '{}').id
+  : ''
+
+source = globalProps.utmParams?.utm_source || ''
+medium = globalProps.utmParams?.utm_medium || ''
+campaign = globalProps.utmParams?.utm_campaign || ''
 
 const triggerTrackEvent = {
-  /* marvelLandingPage: (source: string) => {
+  marvelLandingPage: () => {
     const body = {
-      UserId: '',
-      utm_source: source,
-      user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
-    }
-    logEvent(EventType.MARVEL_LANDING_PAGE, body, false)
-  }, */
-
-  marvelLandingPage: (source: string) => {
-    const body = {
-      UserId: userId,
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       DeviceId: deviceId,
       utm_source: source,
+      utm_medium: medium,
+      utm_campaign: campaign,
       user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
     gtag('event', EventType.MARVEL_LANDING_PAGE, body)
   },
 
-  marvelRegisterNow: ({
-    source,
-    //reg_form_link,
-    campaign,
-    coming_from,
-  }: marvelRegisterNowProps) => {
+  marvelRegisterNow: ({ coming_from }: marvelRegisterNowProps) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       utm_source: source,
       utm_campaign: campaign,
-      utm_medium: '',
+      utm_medium: medium,
       coming_from: coming_from,
-      //user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
     //logEvent(EventType.MARVEL_REGISTER_NOW, body, false)
     gtag('event', EventType.MARVEL_REGISTER_NOW, body)
@@ -62,10 +61,13 @@ const triggerTrackEvent = {
 
   marvelRegisterNumber: (phone_number: string) => {
     const body = {
-      utm_source: '',
-      utm_campaign: '',
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
       UserPhoneNumber: phone_number,
-      utm_medium: '',
     }
     //logEvent(EventType.MARVEL_MOBILE_NUMBER, body, false)
     gtag('event', EventType.MARVEL_MOBILE_NUMBER, body)
@@ -73,10 +75,13 @@ const triggerTrackEvent = {
 
   marvelRegisterSuccess: (phone_number: string) => {
     const body = {
-      utm_source: '',
-      utm_campaign: '',
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
       UserPhoneNumber: phone_number,
-      utm_medium: '',
     }
     //logEvent(EventType.MARVEL_REGISTER_SUCCESS, body, false)
     gtag('event', EventType.MARVEL_REGISTER_SUCCESS, body)
@@ -84,27 +89,27 @@ const triggerTrackEvent = {
 
   marvelNavbarNavigation: (navigation_name: string) => {
     const body = {
-      utm_source: '',
-      utm_campaign: '',
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
       navigation_name: navigation_name,
-      utm_medium: '',
     }
     //logEvent(EventType.MARVEL_NAVBAR_NAVIGATION, body, false)
     gtag('event', EventType.MARVEL_NAVBAR_NAVIGATION, body)
   },
 
-  marvelLoginNow: ({
-    source,
-    //reg_form_link,
-    campaign,
-    coming_from,
-  }: marvelLoginNowProps) => {
+  marvelLoginNow: ({ coming_from }: marvelLoginNowProps) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       utm_source: source,
       utm_campaign: campaign,
-      utm_medium: '',
+      utm_medium: medium,
       coming_from: coming_from,
-      //user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
     //logEvent(EventType.MARVEL_LOGIN_PAGE, body, false)
     gtag('event', EventType.MARVEL_LOGIN_PAGE, body)
@@ -112,46 +117,66 @@ const triggerTrackEvent = {
 
   marvelLoginNumber: (phone_number: string) => {
     const body = {
-      utm_source: '',
-      utm_campaign: '',
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
       UserPhoneNumber: phone_number,
-      utm_medium: '',
     }
     //logEvent(EventType.MARVEL_MOBILE_NUMBER_CLICK, body, false)
     gtag('event', EventType.MARVEL_MOBILE_NUMBER_CLICK, body)
   },
   marvelLoginSuccess: (phone_number: string) => {
     const body = {
-      utm_source: '',
-      utm_campaign: '',
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
       UserPhoneNumber: phone_number,
-      utm_medium: '',
     }
     //logEvent(EventType.MARVEL_LOGIN_SUCCESS, body, false)
     gtag('event', EventType.MARVEL_LOGIN_SUCCESS, body)
   },
 
-  marvelFormVisit: ({
-    source,
-    campaign,
-    medium,
-    profile_details,
-    form_name,
-  }: marvelFormVisitProps) => {
+  marvelFormVisit: ({ profile_details, form_name }: marvelFormVisitProps) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       utm_source: source,
       utm_campaign: campaign,
       utm_medium: medium,
       profile_details: profile_details,
       form_name: form_name,
-      //user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
     //logEvent(EventType.MARVEL_FORM_VISIT, body, false)
     gtag('event', EventType.MARVEL_FORM_VISIT, body)
   },
 
+  marvelSubmitProfile: ({
+    std_class,
+    profile_type,
+  }: marvelSubmitProfileProps) => {
+    const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
+      class: std_class,
+      type: profile_type,
+    }
+    //logEvent(EventType.MARVEL_NOMINATION_TNC_POPUP, body, false)
+    gtag('event', EventType.MARVEL_SUBMIT_PROFILE, body)
+  },
+
   marvelNominationTncPopup: (std_class: string) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       class: std_class,
     }
     //logEvent(EventType.MARVEL_NOMINATION_TNC_POPUP, body, false)
@@ -159,6 +184,9 @@ const triggerTrackEvent = {
   },
   marvelNominationTncAction: (std_class: string) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       class: std_class,
     }
     //logEvent(EventType.MARVEL_NOMINATION_TNC_ACTION, body, false)
@@ -166,72 +194,30 @@ const triggerTrackEvent = {
   },
   marvelNominationSubmit: (std_class: string) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       class: std_class,
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
     }
     //logEvent(EventType.MARVEL_NOMINATION_SUBMIT, body, false)
     gtag('event', EventType.MARVEL_NOMINATION_SUBMIT, body)
   },
   marvelDocumentSubmit: (std_class: string) => {
     const body = {
+      UserId: helper.isUserloggedIn()
+        ? JSON.parse(localStorage?.getItem('user') || '{}').id
+        : '',
       class: std_class,
+      utm_source: source,
+      utm_campaign: campaign,
+      utm_medium: medium,
     }
     //logEvent(EventType.MARVEL_DOCUMENT_SUBMIT, body, false)
     gtag('event', EventType.MARVEL_DOCUMENT_SUBMIT, body)
   },
-  // marvel form register click
-  /*  marvelRegisterSuccessClick: ({ mode, campaign_params }: any) => {
-    const body = {
-      user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
-      mode,
-      campaign_params,
-    }
-    logEvent(EventType.MARVEL_REGISTER_SUCCESS, body, false)
-  }, */
-
-  registrationConfirmationGa: (data: { [key: string]: string }) => {
-    // logEvent(EventType.SAT_REGISTRATION_CONFIRMATION, data, false, data.source)
-    // trackMoengageEvent(EventType.SAT_REGISTRATION_CONFIRMATION, data)
-  },
-
-  /*  registrationConfirmation: ({
-    source,
-    city,
-    email_id,
-    current_class,
-    student_mobile,
-    student_name,
-    guardian_mobile_number,
-    exam_date,
-    exam_mode,
-    offered_course,
-    school_name,
-    academic_achievement,
-    preferred_admission_center,
-    preferred_test_center,
-    available_test_center_city,
-    time_slot,
-  }: registrationConfirmationProps) => {
-    const body = {
-      source,
-      city,
-      email_id,
-      current_class,
-      student_mobile,
-      student_name,
-      guardian_mobile_number,
-      exam_date,
-      offered_course,
-      exam_mode,
-      time_slot,
-      school_name,
-      academic_achievement,
-      preferred_admission_center,
-      preferred_test_center,
-      available_test_center_city,
-      user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
-    }
-    trackMoengageEvent(EventType.SAT_CONFIRMATION_PAGE_VIEW, body)
-  }, */
 }
 
 export default triggerTrackEvent

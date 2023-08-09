@@ -1,15 +1,9 @@
 export interface marvelRegisterNowProps {
-  source: string
-  //reg_form_link: string
-  campaign: any
   coming_from: any
 }
 
 export interface marvelRegisterNumberProps {
-  source: string
   phone_number: any
-  campaign: any
-  medium: any
 }
 
 export interface marvelRegisterSuccessProps {
@@ -18,18 +12,17 @@ export interface marvelRegisterSuccessProps {
 }
 
 export interface marvelLoginNowProps {
-  source: string
-  //reg_form_link: string
-  campaign: any
   coming_from: any
 }
 
 export interface marvelFormVisitProps {
-  source: string
-  campaign: any
-  medium: any
   profile_details: any
   form_name: any
+}
+
+export interface marvelSubmitProfileProps {
+  std_class: any
+  profile_type: any
 }
 
 export interface marvelNominationTncPopupProps {

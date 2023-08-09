@@ -18,6 +18,7 @@ import { useGetDraftData } from '@lib/hooks/marvel/useGetDraftData'
 import { format } from 'date-fns'
 import useNotify, { NotificationEnums } from '@lib/useNotify'
 import { isEmailValid, isPhoneValid } from './utils'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const ProfileDetails = () => {
   const { showNotification } = useNotify()
@@ -119,6 +120,11 @@ const ProfileDetails = () => {
         handleUserUpdated()
       }
       if (res) {
+        const profileData = {
+          std_class: userDetails?.data?.data.profileId.class,
+          profile_type: !user?.profileId?.class ? 'fresh' : 'edit',
+        }
+        triggerTrackEvent.marvelSubmitProfile(profileData)
         router.push('/nomination-form')
       }
     } catch (error: any) {
