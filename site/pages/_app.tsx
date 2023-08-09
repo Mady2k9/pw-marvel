@@ -13,16 +13,17 @@ import { ManagedUIContext } from '@components/ui/context'
 import { MarvelContextWrapper } from '@modules/MarvelContext'
 //import { analytics } from '@modules/Analytics/Ganalytics'
 
+import useAttachUtmParamsToGlobalProps from '@modules/services/events/useAttachUtmParamsToGlobalProps'
+
 const Noop: FC<{ children?: ReactNode }> = ({ children }) => <>{children}</>
 export default function MyApp({ Component, ...props }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
+
+  useAttachUtmParamsToGlobalProps()
+
   useEffect(() => {
     document.body.classList?.remove('loading')
   }, [])
-
-  /* useEffect(() => {
-    analytics(window, document, 'script', 'dataLayer', 'GTM-N34PR65K')
-  }, []) */
 
   return (
     <QueryClientProvider client={queryClient}>

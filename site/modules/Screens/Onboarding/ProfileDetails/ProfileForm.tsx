@@ -61,9 +61,6 @@ const Content = ({
   useEffect(() => {
     // console.log('button name', navBarText)
     const formVisitData = {
-      source: '',
-      campaign: '',
-      medium: '',
       profile_details: '', //navBarText ? 'submitted' : 'not_submitted',
       form_name: 'profile_details',
     }
