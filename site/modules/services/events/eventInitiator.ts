@@ -96,6 +96,7 @@ const triggerTrackEvent = {
       utm_campaign: campaign,
       utm_medium: medium,
       navigation_name: navigation_name,
+      user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
     //logEvent(EventType.MARVEL_NAVBAR_NAVIGATION, body, false)
     gtag('event', EventType.MARVEL_NAVBAR_NAVIGATION, body)
