@@ -26,20 +26,18 @@ userId = helper.isUserloggedIn()
   ? JSON.parse(localStorage?.getItem('user') || '{}').id
   : ''
 
-/* source = globalProps.utmParams?.utm_source || ''
-medium = globalProps.utmParams?.utm_medium || ''
-campaign = globalProps.utmParams?.utm_campaign || '' */
-
 export const getUserData = () => {
-  const utmData = globalProps.utmParams
-
-  //localStorage.setItem('UTM_KEY', JSON.stringify(utmData))
-
   const data: Record<string, any> = {}
 
-  data['utm_source'] = globalProps.utmParams?.utm_source || ''
-  data['utm_medium'] = globalProps.utmParams?.utm_medium || ''
-  data['utm_campaign'] = globalProps.utmParams?.utm_campaign || ''
+  if (
+    window.localStorage.getItem('UTM_KEY') &&
+    window.localStorage.getItem('UTM_KEY') !== 'undefined'
+  ) {
+    const storedItems = JSON.parse(localStorage.getItem('UTM_KEY') || '')
+    data['utm_source'] = storedItems?.utm_source || ''
+    data['utm_medium'] = storedItems?.utm_medium || ''
+    data['utm_campaign'] = storedItems?.utm_campaign || ''
+  }
 
   return data
 }
@@ -47,6 +45,8 @@ export const getUserData = () => {
 export const trackGaEvent = (eventName: any, body: any) => {
   const data = getUserData()
   const updatedData = { ...body, ...data }
+
+  //console.log('ga-event', eventName, updatedData)
 
   gtag('event', eventName, updatedData)
 }
@@ -60,6 +60,9 @@ const triggerTrackEvent = {
       DeviceId: deviceId,
       user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
+    //const utmsData = globalProps.utmParams
+    //localStorage.setItem('UTM_KEY', JSON.stringify(utmsData))
+
     trackGaEvent(EventType.MARVEL_LANDING_PAGE, body)
   },
 
