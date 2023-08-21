@@ -41,7 +41,7 @@ export const trackGaEvent = (eventName: any, body: any) => {
   const data = getUserData()
   const updatedData = { ...body, ...data }
 
-  console.log('ga-event', eventName, updatedData)
+  //console.log('ga-event', eventName, updatedData)
 
   gtag('event', eventName, updatedData)
 }
