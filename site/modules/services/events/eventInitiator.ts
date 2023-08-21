@@ -1,6 +1,4 @@
 import helper from '@lib/eventTracker/helper'
-import globalProps from './globalProps'
-import { localStorageHelper } from '@utils/localStorage'
 
 import {
   marvelRegisterNowProps,
@@ -13,10 +11,7 @@ import { useEffect } from 'react'
 
 let userId: any,
   //userName: any,
-  deviceId: any,
-  source: any,
-  medium: any,
-  campaign: any
+  deviceId: any
 
 if (typeof window !== 'undefined') {
   //userId = JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -46,7 +41,7 @@ export const trackGaEvent = (eventName: any, body: any) => {
   const data = getUserData()
   const updatedData = { ...body, ...data }
 
-  //console.log('ga-event', eventName, updatedData)
+  console.log('ga-event', eventName, updatedData)
 
   gtag('event', eventName, updatedData)
 }
@@ -60,8 +55,6 @@ const triggerTrackEvent = {
       DeviceId: deviceId,
       user_type: helper.isUserloggedIn() ? 'logged_in' : 'not_logged_in',
     }
-    //const utmsData = globalProps.utmParams
-    //localStorage.setItem('UTM_KEY', JSON.stringify(utmsData))
 
     trackGaEvent(EventType.MARVEL_LANDING_PAGE, body)
   },
@@ -109,7 +102,6 @@ const triggerTrackEvent = {
   },
 
   marvelLoginNow: ({ coming_from }: marvelLoginNowProps) => {
-    // const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -120,7 +112,6 @@ const triggerTrackEvent = {
   },
 
   marvelLoginNumber: (phone_number: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -130,7 +121,6 @@ const triggerTrackEvent = {
     trackGaEvent(EventType.MARVEL_MOBILE_NUMBER_CLICK, body)
   },
   marvelLoginSuccess: (phone_number: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -141,7 +131,6 @@ const triggerTrackEvent = {
   },
 
   marvelFormVisit: ({ profile_details, form_name }: marvelFormVisitProps) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -156,7 +145,6 @@ const triggerTrackEvent = {
     std_class,
     profile_type,
   }: marvelSubmitProfileProps) => {
-    // const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -168,7 +156,6 @@ const triggerTrackEvent = {
   },
 
   marvelNominationTncPopup: (std_class: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -178,7 +165,6 @@ const triggerTrackEvent = {
     trackGaEvent(EventType.MARVEL_NOMINATION_TNC_POPUP, body)
   },
   marvelNominationTncAction: (std_class: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -188,7 +174,6 @@ const triggerTrackEvent = {
     gtag('event', EventType.MARVEL_NOMINATION_TNC_ACTION, body)
   },
   marvelNominationSubmit: (std_class: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id
@@ -198,7 +183,6 @@ const triggerTrackEvent = {
     trackGaEvent(EventType.MARVEL_NOMINATION_SUBMIT, body)
   },
   marvelDocumentSubmit: (std_class: string) => {
-    //const data = getUserData()
     const body = {
       UserId: helper.isUserloggedIn()
         ? JSON.parse(localStorage?.getItem('user') || '{}').id

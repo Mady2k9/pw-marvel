@@ -13,8 +13,8 @@ import { ManagedUIContext } from '@components/ui/context'
 import { MarvelContextWrapper } from '@modules/MarvelContext'
 //import { analytics } from '@modules/Analytics/Ganalytics'
 
-import useAttachUtmParamsToGlobalProps from '@modules/services/events/useAttachUtmParamsToGlobalProps'
-import globalProps from '@modules/services/events/globalProps'
+import useAttachUtmParamsToGlobalProps from '@utils/useAttachUtmParamsToGlobalProps'
+import globalProps from '@utils/globalProps'
 
 const Noop: FC<{ children?: ReactNode }> = ({ children }) => <>{children}</>
 export default function MyApp({ Component, ...props }: AppProps) {
@@ -23,11 +23,7 @@ export default function MyApp({ Component, ...props }: AppProps) {
   useAttachUtmParamsToGlobalProps()
 
   const initialRender = useRef(true)
-
   const utmItems: any = globalProps.utmParams
-
-  //console.log('utmItems::::25:::', utmItems)
-
   const [utmValue, setUtmValue] = useState(utmItems)
 
   useEffect(() => {
@@ -36,12 +32,9 @@ export default function MyApp({ Component, ...props }: AppProps) {
       window.localStorage.getItem('UTM_KEY') !== 'undefined'
     ) {
       const storedItems = JSON.parse(localStorage.getItem('UTM_KEY') || '')
-      //console.log('UTMS:32::', storedItems)
       setUtmValue(storedItems)
     }
   }, [])
-
-  //console.log('UTMSV::38:', utmValue)
 
   useEffect(() => {
     if (initialRender.current) {
