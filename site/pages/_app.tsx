@@ -42,8 +42,8 @@ export default function MyApp({ Component, ...props }: AppProps) {
       return
     }
     if (
-      utmItems?.utm_source &&
-      utmItems?.utm_campaign &&
+      utmItems?.utm_source ||
+      utmItems?.utm_campaign ||
       utmItems?.utm_medium
     ) {
       window.localStorage.setItem('UTM_KEY', JSON.stringify(utmItems))
