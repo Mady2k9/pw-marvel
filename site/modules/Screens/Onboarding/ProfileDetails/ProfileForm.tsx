@@ -8,6 +8,7 @@ import { StudentDataProps } from './types'
 import { addSuffixToNumber } from '@utils/helps'
 import cn from 'clsx'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 export interface ProfileFormProps {
   studentData: StudentDataProps
@@ -57,6 +58,14 @@ const Content = ({
     () => Boolean(studentData?.class) && !isEditEnabled,
     [isEditEnabled, studentData]
   )
+  useEffect(() => {
+    // console.log('button name', navBarText)
+    const formVisitData = {
+      profile_details: '', //navBarText ? 'submitted' : 'not_submitted',
+      form_name: 'profile_details',
+    }
+    triggerTrackEvent.marvelFormVisit(formVisitData)
+  }, [])
   return (
     <div className="w-full bg-white overflow-y-scroll z-0">
       <div className=" flex justify-center">

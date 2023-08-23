@@ -1,8 +1,10 @@
-import Footer from '@modules/SiteFooter'
-import Header from '@components/common/Header/Header'
 import { useEffect } from 'react'
 import { useUI } from '@components/ui'
 import { useRouter } from 'next/router'
+import Footer from '@modules/SiteFooter'
+import Header from '@components/common/Header/Header'
+
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 import {
   Banner,
   Faq,
@@ -14,11 +16,17 @@ import {
 const Home = () => {
   const { user } = useUI()
   const router = useRouter()
+
+  useEffect(() => {
+    triggerTrackEvent.marvelLandingPage()
+  }, [])
+
   useEffect(() => {
     if (user) {
       router.replace('/profile-details')
     }
   }, [user])
+
   return (
     <>
       <Header variant="MARVELSHeader" />

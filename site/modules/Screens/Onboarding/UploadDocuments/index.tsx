@@ -12,6 +12,8 @@ import { useGetDraftData } from '@lib/hooks/marvel/useGetDraftData'
 import { deleteAllCookies } from '@lib/user-utility'
 import useNotify, { NotificationEnums } from '@lib/useNotify'
 import { format } from 'date-fns'
+import { localStorageHelper } from '@utils/helps'
+import triggerTrackEvent from '@modules/services/events/eventInitiator'
 
 const UploadDocumentsScreen = () => {
   const { showNotification } = useNotify()
@@ -98,6 +100,9 @@ const UploadDocumentsScreen = () => {
     postFormData(dataToSend, randomId)
       .then((res: any) => {
         if (res) {
+          const studentData = localStorageHelper.getItem('user')
+          const className = studentData?.profileId?.class
+          triggerTrackEvent.marvelDocumentSubmit(className)
           toggleModal()
         }
       })
@@ -149,6 +154,17 @@ const UploadDocumentsScreen = () => {
     return !(checkStudentDoc && checkForNominationDocs)
   }
 
+  useEffect(() => {
+    const formVisitData = {
+      source: '',
+      campaign: '',
+      medium: '',
+      profile_details: 'submitted',
+      form_name: 'upload_document',
+    }
+    triggerTrackEvent.marvelFormVisit(formVisitData)
+  }, [])
+
   return (
     <Layout
       header={
@@ -191,7 +207,12 @@ const UploadDocumentsScreen = () => {
             <div className="text-center text-[16px] mt-4">
               You can edit the form till
               <span className="font-semibold text-[18px] mx-1">
-                {draftData?.registrationEndDate ? format(new Date(draftData?.registrationEndDate), 'dd MMM yyyy') : '-'}
+                {draftData?.registrationEndDate
+                  ? format(
+                      new Date(draftData?.registrationEndDate),
+                      'dd MMM yyyy'
+                    )
+                  : '-'}
               </span>
               <br />
               After this form will be auto-submitted
