@@ -14,6 +14,7 @@ import useNotify, { NotificationEnums } from '@lib/useNotify'
 import { format } from 'date-fns'
 import { localStorageHelper } from '@utils/helps'
 import triggerTrackEvent from '@modules/services/events/eventInitiator'
+import { useAuth } from '@lib/hooks/useAuth'
 
 const UploadDocumentsScreen = () => {
   const { showNotification } = useNotify()
@@ -24,15 +25,17 @@ const UploadDocumentsScreen = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const router = useRouter()
+  const { handleLogout } = useAuth()
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
   const successRedirectModal = () => {
-    router.push('/rewards')
-    localStorage.clear()
+    //router.push('/rewards')
+    //localStorage.clear()
     deleteAllCookies()
+    handleLogout('/rewards')
   }
 
   useEffect(() => {
