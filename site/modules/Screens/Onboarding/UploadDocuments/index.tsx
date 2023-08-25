@@ -1,7 +1,7 @@
 import { Header } from '@modules/Screens/Onboarding/Components'
 import DocumentsSection from '@modules/Screens/Onboarding/UploadDocuments/DocumentsSection'
 import Layout from '../Layout'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { postFormData } from '@modules/auth/lib'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
@@ -15,6 +15,8 @@ import { format } from 'date-fns'
 import { localStorageHelper } from '@utils/helps'
 import triggerTrackEvent from '@modules/services/events/eventInitiator'
 import { useAuth } from '@lib/hooks/useAuth'
+import uuid from 'react-uuid'
+import { useUI } from '@components/ui'
 
 const UploadDocumentsScreen = () => {
   const { showNotification } = useNotify()
@@ -26,16 +28,28 @@ const UploadDocumentsScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const router = useRouter()
   const { handleLogout } = useAuth()
+  const { handleUserUpdated, refetchRecentCohort } = useUI()
+  const redirectionTimeOut = useRef<{
+    timer: ReturnType<typeof setTimeout> | number
+  }>({
+    timer: 0,
+  })
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
   const successRedirectModal = () => {
-    //router.push('/rewards')
-    //localStorage.clear()
+    localStorage.clear()
     deleteAllCookies()
-    handleLogout('/rewards')
+    handleUserUpdated()
+    //handleLogout('/rewards')
+    const newId = uuid()
+    localStorage.setItem('randomId', newId)
+    localStorage.setItem('uuid', newId)
+    redirectionTimeOut.current.timer = setTimeout(() => {
+      router.push('/rewards')
+    })
   }
 
   useEffect(() => {
