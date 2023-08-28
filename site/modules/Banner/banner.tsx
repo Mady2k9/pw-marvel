@@ -1,5 +1,6 @@
 import React from 'react'
 import cn from 'clsx'
+
 import s from './banner.module.css'
 import Image from 'next/image'
 import { Button, Typography } from '@components/ui'
