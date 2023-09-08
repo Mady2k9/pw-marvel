@@ -5,9 +5,9 @@ def getEnvName() {
     else if (env.BRANCH_NAME == 'staging') {
         return 'staging'
     }
-/*     else if (env.BRANCH_NAME == 'development') {
+    else if (env.BRANCH_NAME == 'development') {
         return 'development'
-    } */
+    } 
 }
 
 pipeline {
