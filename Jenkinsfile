@@ -7,7 +7,7 @@ def getEnvName() {
     }
     else if (env.BRANCH_NAME == 'development') {
         return 'development'
-    }
+    } 
 }
 
 pipeline {
