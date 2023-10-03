@@ -1,14 +1,17 @@
 def getEnvName() {
     if (env.BRANCH_NAME == 'main') {
         return 'production'
+    }else if (env.BRANCH_NAME == 'pre-prod') {
+        return 'pre-prod'
     }
     else if (env.BRANCH_NAME == 'staging') {
         return 'staging'
     }
     else if (env.BRANCH_NAME == 'development') {
         return 'development'
-    } 
+    }
 }
+
 
 pipeline {
   agent {
@@ -25,6 +28,11 @@ pipeline {
         stage('Starting-CICD') {
             steps {
                 build wait: false, job: "/${env.envName}/${env.serviceName}", parameters: [string(name: 'ServiceName', value: "${env.serviceName}"), string(name: 'RepoUrl', value: "${GIT_URL}")]
+            }
+        }
+        stage('Starting-CICD for DR') {
+            steps {
+                build wait: false, job: "/Production-dr/${env.serviceName}", parameters: [string(name: 'ServiceName', value: "${env.serviceName}"), string(name: 'RepoUrl', value: "${GIT_URL}")]
             }
         }
     }  
